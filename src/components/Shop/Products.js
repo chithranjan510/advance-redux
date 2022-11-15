@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 
 import ProductItem from './ProductItem';
 import classes from './Products.module.css';
-import { cartActions } from '../reduxStore/cartSlice';
 
 const products = [
   {
@@ -25,27 +23,6 @@ const productList = products.map((item) => (
 ));
 
 const Products = (props) => {
-  const dispatch = useDispatch();
-
-  // fetching data on refresh
-  useEffect(() => {
-    const requestingData = async () => {
-      try {
-        const response = await fetch(
-          'https://expense-tracker-e8647-default-rtdb.firebaseio.com/advance-redux-cart.json'
-        );
-        const data = await response.json();
-        if (response.ok) {
-          dispatch(cartActions.replaceCartItem(data.cart));
-        } else {
-          throw new Error(data.error);
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    requestingData();
-  }, [dispatch]);
 
   return (
     <section className={classes.products}>
